@@ -27,8 +27,18 @@
         .glance-card { background-color: #fff; border: 1px solid #ccc; border-radius: 12px; padding: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .glance-card h3 { margin-top: 0; margin-bottom: 20px; color: #333; font-size: 18px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
 
+        /* Universal Subject Color Palette */
+        .color-math { border-left-color: #4285f4 !important; }       /* Blue */
+        .color-dsa { border-left-color: #34a853 !important; }        /* Green */
+        .color-physics { border-left-color: #fbbc05 !important; }    /* Yellow */
+        .color-ai { border-left-color: #ea4335 !important; }         /* Red */
+        .color-bioethics { border-left-color: #9c27b0 !important; }  /* Purple */
+        .color-ethics { border-left-color: #009688 !important; }     /* Teal */
+        .color-workshop { border-left-color: #607d8b !important; }   /* Blue-Grey */
+        .color-break { border-left-color: #9aa0a6 !important; background-color: #f1f3f4; opacity: 0.8; }
+
         /* Dynamic Class Items */
-        .class-item { background-color: #f1f4f9; border-radius: 8px; padding: 20px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; }
+        .class-item { background-color: #f1f4f9; border-radius: 8px; padding: 20px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; border-left: 5px solid #ccc; }
         .class-title { font-size: 18px; font-weight: bold; color: #333; margin: 0; }
         .class-prof { font-size: 14px; color: #555; margin: 0; }
         .button-group { display: flex; gap: 10px; margin-top: 5px; }
@@ -83,36 +93,36 @@
 
         const timetableData = {
             "Monday": [
-                { subject: "[MAN12101] Mathematics-II (L)", time: "09:00 AM - 10:00 AM", prof: "Insert Prof Name" },
-                { subject: "[EAN12700] Professional Ethics (L)", time: "10:00 AM - 11:00 AM", prof: "Insert Prof Name" },
-                { subject: "[MEN12602] Workshop & Mfg (P)", time: "11:00 AM - 01:00 PM", prof: "Insert Prof Name" },
-                { subject: "[MAN12101] Mathematics-II (T)", time: "03:00 PM - 04:00 PM", prof: "Insert Prof Name" },
-                { subject: "[MEN12602] Workshop & Mfg (L)", time: "04:00 PM - 05:00 PM", prof: "Insert Prof Name" },
-                { subject: "[CSN12401] Data Structures (L)", time: "05:00 PM - 06:00 PM", prof: "Insert Prof Name" }
+                { subject: "[MAN12101] Mathematics-II (L)", time: "09:00 AM - 10:00 AM", prof: "Insert Prof Name", theme: "color-math" },
+                { subject: "[EAN12700] Professional Ethics (L)", time: "10:00 AM - 11:00 AM", prof: "Insert Prof Name", theme: "color-ethics" },
+                { subject: "[MEN12602] Workshop & Mfg (P)", time: "11:00 AM - 01:00 PM", prof: "Insert Prof Name", theme: "color-workshop" },
+                { subject: "[MAN12101] Mathematics-II (T)", time: "03:00 PM - 04:00 PM", prof: "Insert Prof Name", theme: "color-math" },
+                { subject: "[MEN12602] Workshop & Mfg (L)", time: "04:00 PM - 05:00 PM", prof: "Insert Prof Name", theme: "color-workshop" },
+                { subject: "[CSN12401] Data Structures (L)", time: "05:00 PM - 06:00 PM", prof: "Insert Prof Name", theme: "color-dsa" }
             ],
             "Tuesday": [
-                { subject: "[CSN12601] AI and ML (P)", time: "09:00 AM - 11:00 AM", prof: "Insert Prof Name" },
-                { subject: "[CSN12401] Data Structures (P)", time: "04:00 PM - 06:00 PM", prof: "Insert Prof Name" }
+                { subject: "[CSN12601] AI and ML (P)", time: "09:00 AM - 11:00 AM", prof: "Insert Prof Name", theme: "color-ai" },
+                { subject: "[CSN12401] Data Structures (P)", time: "04:00 PM - 06:00 PM", prof: "Insert Prof Name", theme: "color-dsa" }
             ],
             "Wednesday": [
-                { subject: "[EAN12700] Professional Ethics (L)", time: "09:00 AM - 10:00 AM", prof: "Insert Prof Name" },
-                { subject: "[BTN12101] Biosafety & Bioethics (L)", time: "10:00 AM - 11:00 AM", prof: "Insert Prof Name" },
-                { subject: "[PHN12503] Engineering Physics-3 (L)", time: "11:00 AM - 12:00 PM", prof: "Insert Prof Name" },
-                { subject: "[PHN12503] Engineering Physics-3 (P)", time: "03:00 PM - 05:00 PM", prof: "Insert Prof Name" },
-                { subject: "[CSN12401] Data Structures (L)", time: "05:00 PM - 06:00 PM", prof: "Insert Prof Name" }
+                { subject: "[EAN12700] Professional Ethics (L)", time: "09:00 AM - 10:00 AM", prof: "Insert Prof Name", theme: "color-ethics" },
+                { subject: "[BTN12101] Biosafety & Bioethics (L)", time: "10:00 AM - 11:00 AM", prof: "Insert Prof Name", theme: "color-bioethics" },
+                { subject: "[PHN12503] Engineering Physics-3 (L)", time: "11:00 AM - 12:00 PM", prof: "Insert Prof Name", theme: "color-physics" },
+                { subject: "[PHN12503] Engineering Physics-3 (P)", time: "03:00 PM - 05:00 PM", prof: "Insert Prof Name", theme: "color-physics" },
+                { subject: "[CSN12401] Data Structures (L)", time: "05:00 PM - 06:00 PM", prof: "Insert Prof Name", theme: "color-dsa" }
             ],
             "Thursday": [
-                { subject: "[CSN12601] AI and ML (L)", time: "11:00 AM - 12:00 PM", prof: "Insert Prof Name" },
-                { subject: "[BTN12101] Biosafety & Bioethics (L)", time: "12:00 PM - 01:00 PM", prof: "Insert Prof Name" },
-                { subject: "[PHN12503] Engineering Physics-3 (L)", time: "04:00 PM - 05:00 PM", prof: "Insert Prof Name" },
-                { subject: "[MAN12101] Mathematics-II (L)", time: "05:00 PM - 06:00 PM", prof: "Insert Prof Name" }
+                { subject: "[CSN12601] AI and ML (L)", time: "11:00 AM - 12:00 PM", prof: "Insert Prof Name", theme: "color-ai" },
+                { subject: "[BTN12101] Biosafety & Bioethics (L)", time: "12:00 PM - 01:00 PM", prof: "Insert Prof Name", theme: "color-bioethics" },
+                { subject: "[PHN12503] Engineering Physics-3 (L)", time: "04:00 PM - 05:00 PM", prof: "Insert Prof Name", theme: "color-physics" },
+                { subject: "[MAN12101] Mathematics-II (L)", time: "05:00 PM - 06:00 PM", prof: "Insert Prof Name", theme: "color-math" }
             ],
             "Friday": [
-                { subject: "[CSN12601] AI and ML (L)", time: "09:00 AM - 10:00 AM", prof: "Insert Prof Name" },
-                { subject: "[PHN12503] Engineering Physics-3 (L)", time: "10:00 AM - 11:00 AM", prof: "Insert Prof Name" },
-                { subject: "[MEN12602] Workshop & Mfg (P)", time: "11:00 AM - 01:00 PM", prof: "Insert Prof Name" },
-                { subject: "[MAN12101] Mathematics-II (L)", time: "02:00 PM - 03:00 PM", prof: "Insert Prof Name" },
-                { subject: "[BTN12101] Biosafety & Bioethics (T)", time: "03:00 PM - 04:00 PM", prof: "Insert Prof Name" }
+                { subject: "[CSN12601] AI and ML (L)", time: "09:00 AM - 10:00 AM", prof: "Insert Prof Name", theme: "color-ai" },
+                { subject: "[PHN12503] Engineering Physics-3 (L)", time: "10:00 AM - 11:00 AM", prof: "Insert Prof Name", theme: "color-physics" },
+                { subject: "[MEN12602] Workshop & Mfg (P)", time: "11:00 AM - 01:00 PM", prof: "Insert Prof Name", theme: "color-workshop" },
+                { subject: "[MAN12101] Mathematics-II (L)", time: "02:00 PM - 03:00 PM", prof: "Insert Prof Name", theme: "color-math" },
+                { subject: "[BTN12101] Biosafety & Bioethics (T)", time: "03:00 PM - 04:00 PM", prof: "Insert Prof Name", theme: "color-bioethics" }
             ]
         };
 
@@ -124,7 +134,7 @@
             container.innerHTML = ''; 
             todaysSchedule.forEach(cls => {
                 const classHTML = `
-                    <div class="class-item">
+                    <div class="class-item ${cls.theme}">
                         <h4 class="class-title">${cls.subject} (${cls.time})</h4>
                         <p class="class-prof"><strong>Prof:</strong> ${cls.prof}</p>
                         <div class="button-group">

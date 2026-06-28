@@ -23,16 +23,23 @@
         .schedule-card { background-color: #333; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .card-header { padding: 15px 20px; color: #fff; font-size: 18px; font-weight: 600; }
         .card-body { background-color: #fff; padding: 20px; }
-        .class-item { display: flex; align-items: center; background-color: #f9f9f9; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border-left: 4px solid #ccc; }
-        .class-item.lecture { border-left-color: #34a853; }
-        .class-item.practical { border-left-color: #fbbc05; }
-        .class-item.tutorial { border-left-color: #4285f4; }
-        .class-item.break { border-left-color: #9aa0a6; background-color: #f1f3f4; opacity: 0.8; }
+        
+        /* Universal Subject Color Palette */
+        .color-math { border-left-color: #4285f4 !important; }       
+        .color-dsa { border-left-color: #34a853 !important; }        
+        .color-physics { border-left-color: #fbbc05 !important; }    
+        .color-ai { border-left-color: #ea4335 !important; }         
+        .color-bioethics { border-left-color: #9c27b0 !important; }  
+        .color-ethics { border-left-color: #009688 !important; }     
+        .color-workshop { border-left-color: #607d8b !important; }   
+        .color-break { border-left-color: #9aa0a6 !important; background-color: #f1f3f4; opacity: 0.8; }
+
+        .class-item { display: flex; align-items: center; background-color: #f9f9f9; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border-left: 5px solid #ccc; }
         .time-box { width: 150px; padding: 20px; font-weight: bold; color: #333; border-right: 1px solid #eee; text-align: center; font-size: 14px; }
         .details-box { padding: 15px 20px; flex-grow: 1; }
         .subject-name { font-size: 16px; font-weight: 600; color: #222; margin-bottom: 5px; }
         .meta-info { font-size: 13px; color: #666; }
-        .break .subject-name { color: #5f6368; font-weight: 500; }
+        .color-break .subject-name { color: #5f6368; font-weight: 500; }
         .day-content { display: none; }
         .day-content.active { display: block; }
     </style>
@@ -67,47 +74,47 @@
             <div class="card-body">
                 
                 <div id="Monday" class="day-content active">
-                    <div class="class-item lecture"><div class="time-box">09:00 AM - 10:00 AM</div><div class="details-box"><div class="subject-name">[MAN12101] Mathematics-II (L)</div><div class="meta-info">Room: FEW15</div></div></div>
-                    <div class="class-item lecture"><div class="time-box">10:00 AM - 11:00 AM</div><div class="details-box"><div class="subject-name">[EAN12700] Professional Ethics (L)</div><div class="meta-info">Room: NLH2</div></div></div>
-                    <div class="class-item practical"><div class="time-box">11:00 AM - 01:00 PM</div><div class="details-box"><div class="subject-name">[MEN12602] Workshop & Mfg (P)</div><div class="meta-info">Batch: K1 • 2 Hours</div></div></div>
-                    <div class="class-item break"><div class="time-box">01:00 PM - 03:00 PM</div><div class="details-box"><div class="subject-name">Break</div></div></div>
-                    <div class="class-item tutorial"><div class="time-box">03:00 PM - 04:00 PM</div><div class="details-box"><div class="subject-name">[MAN12101] Mathematics-II (T)</div><div class="meta-info">Room: LH2</div></div></div>
-                    <div class="class-item lecture"><div class="time-box">04:00 PM - 05:00 PM</div><div class="details-box"><div class="subject-name">[MEN12602] Workshop & Mfg (L)</div><div class="meta-info">Room: LH2</div></div></div>
-                    <div class="class-item lecture"><div class="time-box">05:00 PM - 06:00 PM</div><div class="details-box"><div class="subject-name">[CSN12401] Data Structures (L)</div><div class="meta-info">Room: NLH1</div></div></div>
+                    <div class="class-item color-math"><div class="time-box">09:00 AM - 10:00 AM</div><div class="details-box"><div class="subject-name">[MAN12101] Mathematics-II (L)</div><div class="meta-info">Room: FEW15</div></div></div>
+                    <div class="class-item color-ethics"><div class="time-box">10:00 AM - 11:00 AM</div><div class="details-box"><div class="subject-name">[EAN12700] Professional Ethics (L)</div><div class="meta-info">Room: NLH2</div></div></div>
+                    <div class="class-item color-workshop"><div class="time-box">11:00 AM - 01:00 PM</div><div class="details-box"><div class="subject-name">[MEN12602] Workshop & Mfg (P)</div><div class="meta-info">Batch: K1 • 2 Hours</div></div></div>
+                    <div class="class-item color-break"><div class="time-box">01:00 PM - 03:00 PM</div><div class="details-box"><div class="subject-name">Break</div></div></div>
+                    <div class="class-item color-math"><div class="time-box">03:00 PM - 04:00 PM</div><div class="details-box"><div class="subject-name">[MAN12101] Mathematics-II (T)</div><div class="meta-info">Room: LH2</div></div></div>
+                    <div class="class-item color-workshop"><div class="time-box">04:00 PM - 05:00 PM</div><div class="details-box"><div class="subject-name">[MEN12602] Workshop & Mfg (L)</div><div class="meta-info">Room: LH2</div></div></div>
+                    <div class="class-item color-dsa"><div class="time-box">05:00 PM - 06:00 PM</div><div class="details-box"><div class="subject-name">[CSN12401] Data Structures (L)</div><div class="meta-info">Room: NLH1</div></div></div>
                 </div>
 
                 <div id="Tuesday" class="day-content">
-                    <div class="class-item practical"><div class="time-box">09:00 AM - 11:00 AM</div><div class="details-box"><div class="subject-name">[CSN12601] AI and ML (P)</div><div class="meta-info">Room: CCSF Lab • 2 Hours</div></div></div>
-                    <div class="class-item break"><div class="time-box">11:00 AM - 04:00 PM</div><div class="details-box"><div class="subject-name">Break</div></div></div>
-                    <div class="class-item practical"><div class="time-box">04:00 PM - 06:00 PM</div><div class="details-box"><div class="subject-name">[CSN12401] Data Structures (P)</div><div class="meta-info">Room: CCSF Lab • 2 Hours</div></div></div>
+                    <div class="class-item color-ai"><div class="time-box">09:00 AM - 11:00 AM</div><div class="details-box"><div class="subject-name">[CSN12601] AI and ML (P)</div><div class="meta-info">Room: CCSF Lab • 2 Hours</div></div></div>
+                    <div class="class-item color-break"><div class="time-box">11:00 AM - 04:00 PM</div><div class="details-box"><div class="subject-name">Break</div></div></div>
+                    <div class="class-item color-dsa"><div class="time-box">04:00 PM - 06:00 PM</div><div class="details-box"><div class="subject-name">[CSN12401] Data Structures (P)</div><div class="meta-info">Room: CCSF Lab • 2 Hours</div></div></div>
                 </div>
 
                 <div id="Wednesday" class="day-content">
-                    <div class="class-item lecture"><div class="time-box">09:00 AM - 10:00 AM</div><div class="details-box"><div class="subject-name">[EAN12700] Professional Ethics (L)</div><div class="meta-info">Room: NLH2</div></div></div>
-                    <div class="class-item lecture"><div class="time-box">10:00 AM - 11:00 AM</div><div class="details-box"><div class="subject-name">[BTN12101] Biosafety & Bioethics (L)</div><div class="meta-info">Room: GS5/GKP</div></div></div>
-                    <div class="class-item lecture"><div class="time-box">11:00 AM - 12:00 PM</div><div class="details-box"><div class="subject-name">[PHN12503] Engineering Physics-3 (L)</div><div class="meta-info">Room: GS5</div></div></div>
-                    <div class="class-item break"><div class="time-box">12:00 PM - 03:00 PM</div><div class="details-box"><div class="subject-name">Break</div></div></div>
-                    <div class="class-item practical"><div class="time-box">03:00 PM - 05:00 PM</div><div class="details-box"><div class="subject-name">[PHN12503] Engineering Physics-3 (P)</div><div class="meta-info">2 Hours</div></div></div>
-                    <div class="class-item lecture"><div class="time-box">05:00 PM - 06:00 PM</div><div class="details-box"><div class="subject-name">[CSN12401] Data Structures (L)</div><div class="meta-info">Room: NLH1</div></div></div>
+                    <div class="class-item color-ethics"><div class="time-box">09:00 AM - 10:00 AM</div><div class="details-box"><div class="subject-name">[EAN12700] Professional Ethics (L)</div><div class="meta-info">Room: NLH2</div></div></div>
+                    <div class="class-item color-bioethics"><div class="time-box">10:00 AM - 11:00 AM</div><div class="details-box"><div class="subject-name">[BTN12101] Biosafety & Bioethics (L)</div><div class="meta-info">Room: GS5/GKP</div></div></div>
+                    <div class="class-item color-physics"><div class="time-box">11:00 AM - 12:00 PM</div><div class="details-box"><div class="subject-name">[PHN12503] Engineering Physics-3 (L)</div><div class="meta-info">Room: GS5</div></div></div>
+                    <div class="class-item color-break"><div class="time-box">12:00 PM - 03:00 PM</div><div class="details-box"><div class="subject-name">Break</div></div></div>
+                    <div class="class-item color-physics"><div class="time-box">03:00 PM - 05:00 PM</div><div class="details-box"><div class="subject-name">[PHN12503] Engineering Physics-3 (P)</div><div class="meta-info">2 Hours</div></div></div>
+                    <div class="class-item color-dsa"><div class="time-box">05:00 PM - 06:00 PM</div><div class="details-box"><div class="subject-name">[CSN12401] Data Structures (L)</div><div class="meta-info">Room: NLH1</div></div></div>
                 </div>
 
                 <div id="Thursday" class="day-content">
-                    <div class="class-item break"><div class="time-box">09:00 AM - 11:00 AM</div><div class="details-box"><div class="subject-name">Break</div></div></div>
-                    <div class="class-item lecture"><div class="time-box">11:00 AM - 12:00 PM</div><div class="details-box"><div class="subject-name">[CSN12601] AI and ML (L)</div><div class="meta-info">Room: GS7</div></div></div>
-                    <div class="class-item lecture"><div class="time-box">12:00 PM - 01:00 PM</div><div class="details-box"><div class="subject-name">[BTN12101] Biosafety & Bioethics (L)</div><div class="meta-info">Room: GSS7/GKP</div></div></div>
-                    <div class="class-item break"><div class="time-box">01:00 PM - 04:00 PM</div><div class="details-box"><div class="subject-name">Break</div></div></div>
-                    <div class="class-item lecture"><div class="time-box">04:00 PM - 05:00 PM</div><div class="details-box"><div class="subject-name">[PHN12503] Engineering Physics-3 (L)</div><div class="meta-info">Room: GS4</div></div></div>
-                    <div class="class-item lecture"><div class="time-box">05:00 PM - 06:00 PM</div><div class="details-box"><div class="subject-name">[MAN12101] Mathematics-II (L)</div><div class="meta-info">Room: GS4</div></div></div>
+                    <div class="class-item color-break"><div class="time-box">09:00 AM - 11:00 AM</div><div class="details-box"><div class="subject-name">Break</div></div></div>
+                    <div class="class-item color-ai"><div class="time-box">11:00 AM - 12:00 PM</div><div class="details-box"><div class="subject-name">[CSN12601] AI and ML (L)</div><div class="meta-info">Room: GS7</div></div></div>
+                    <div class="class-item color-bioethics"><div class="time-box">12:00 PM - 01:00 PM</div><div class="details-box"><div class="subject-name">[BTN12101] Biosafety & Bioethics (L)</div><div class="meta-info">Room: GSS7/GKP</div></div></div>
+                    <div class="class-item color-break"><div class="time-box">01:00 PM - 04:00 PM</div><div class="details-box"><div class="subject-name">Break</div></div></div>
+                    <div class="class-item color-physics"><div class="time-box">04:00 PM - 05:00 PM</div><div class="details-box"><div class="subject-name">[PHN12503] Engineering Physics-3 (L)</div><div class="meta-info">Room: GS4</div></div></div>
+                    <div class="class-item color-math"><div class="time-box">05:00 PM - 06:00 PM</div><div class="details-box"><div class="subject-name">[MAN12101] Mathematics-II (L)</div><div class="meta-info">Room: GS4</div></div></div>
                 </div>
 
                 <div id="Friday" class="day-content">
-                    <div class="class-item lecture"><div class="time-box">09:00 AM - 10:00 AM</div><div class="details-box"><div class="subject-name">[CSN12601] AI and ML (L)</div><div class="meta-info">Room: GS5</div></div></div>
-                    <div class="class-item lecture"><div class="time-box">10:00 AM - 11:00 AM</div><div class="details-box"><div class="subject-name">[PHN12503] Engineering Physics-3 (L)</div><div class="meta-info">Room: GS5</div></div></div>
-                    <div class="class-item practical"><div class="time-box">11:00 AM - 01:00 PM</div><div class="details-box"><div class="subject-name">[MEN12602] Workshop & Mfg (P)</div><div class="meta-info">Batch: K2 • 2 Hours</div></div></div>
-                    <div class="class-item break"><div class="time-box">01:00 PM - 02:00 PM</div><div class="details-box"><div class="subject-name">Break</div></div></div>
-                    <div class="class-item lecture"><div class="time-box">02:00 PM - 03:00 PM</div><div class="details-box"><div class="subject-name">[MAN12101] Mathematics-II (L)</div><div class="meta-info">Room: SEW9</div></div></div>
-                    <div class="class-item tutorial"><div class="time-box">03:00 PM - 04:00 PM</div><div class="details-box"><div class="subject-name">[BTN12101] Biosafety & Bioethics (T)</div><div class="meta-info">Room: SEW9/GKP</div></div></div>
-                    <div class="class-item break"><div class="time-box">04:00 PM - 06:00 PM</div><div class="details-box"><div class="subject-name">Break</div></div></div>
+                    <div class="class-item color-ai"><div class="time-box">09:00 AM - 10:00 AM</div><div class="details-box"><div class="subject-name">[CSN12601] AI and ML (L)</div><div class="meta-info">Room: GS5</div></div></div>
+                    <div class="class-item color-physics"><div class="time-box">10:00 AM - 11:00 AM</div><div class="details-box"><div class="subject-name">[PHN12503] Engineering Physics-3 (L)</div><div class="meta-info">Room: GS5</div></div></div>
+                    <div class="class-item color-workshop"><div class="time-box">11:00 AM - 01:00 PM</div><div class="details-box"><div class="subject-name">[MEN12602] Workshop & Mfg (P)</div><div class="meta-info">Batch: K2 • 2 Hours</div></div></div>
+                    <div class="class-item color-break"><div class="time-box">01:00 PM - 02:00 PM</div><div class="details-box"><div class="subject-name">Break</div></div></div>
+                    <div class="class-item color-math"><div class="time-box">02:00 PM - 03:00 PM</div><div class="details-box"><div class="subject-name">[MAN12101] Mathematics-II (L)</div><div class="meta-info">Room: SEW9</div></div></div>
+                    <div class="class-item color-bioethics"><div class="time-box">03:00 PM - 04:00 PM</div><div class="details-box"><div class="subject-name">[BTN12101] Biosafety & Bioethics (T)</div><div class="meta-info">Room: SEW9/GKP</div></div></div>
+                    <div class="class-item color-break"><div class="time-box">04:00 PM - 06:00 PM</div><div class="details-box"><div class="subject-name">Break</div></div></div>
                 </div>
             </div>
         </div>
