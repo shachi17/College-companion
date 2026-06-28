@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Companion - Timetable</title>
+    <style>
+        /* General Reset & Body */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar Styles (Collapsible exactly like Home) */
+        .sidebar {
+            width: 250px;
+            background-color: #fff;
+            border-right: 1px solid #ddd;
+            padding: 20px 0;
+            transition: width 0.3s ease, padding 0.3s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+        .sidebar.collapsed {
+            width: 0;
+            padding: 0;
+            border-right: none;
+        }
+
+        /* Back to Home Button */
+        .back-home-btn {
+            display: block;
+            text-align: center;
+            background-color: #333;
+            color: #fff;
+            padding: 12px 15px;
+            margin: 10px 20px 30px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+        .back-home-btn:hover {
+            background-color: #555;
+        }
+
+        .nav-item {
+            padding: 15px 25px;
+            color: #555;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            display: block;
+        }
+        .nav-item.active {
+            background-color: #eef2f6;
+            color: #1a73e8;
+            border-radius: 0 25px 25px 0;
+            margin-right: 20px;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex-grow: 1;
+            padding: 40px;
+            overflow-y: auto;
+            transition: margin-left 0.3s ease;
+        }
+
+        /* Header & Tabs */
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .header-section h1 {
+            margin: 0;
+            color: #333;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .menu-icon {
+            font-size: 28px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .week-tabs {
+            display: flex;
+            gap: 10px;
+        }
+        .tab-btn {
+            padding: 8px 16px;
+            border: none;
+            background: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #777;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .tab-btn:hover {
+            background-color: #eaeaea;
+        }
+        .tab-btn.active {
+            background-color: #333;
+            color: #fff;
+        }
+
+        /* Schedule Card */
+        .schedule-card {
+            background-color: #333; 
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .card-header {
+            padding: 15px 20px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .card-body {
+            background-color: #fff;
+            padding: 20px;
+        }
+
+        /* Class Items */
+        .class-item {
+            display: flex;
+            align-items: center;
+            background-color: #f9f9f9;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border-left: 4px solid #ccc;
+        }
+        .class-item.lecture { border-left-color: #34a853; }
+        .class-item.practical { border-left-color: #fbbc05; }
+        .class-item.tutorial { border-left-color: #4285f4; }
+        .class-item.break { 
+            border-left-color: #9aa0a6; 
+            background-color: #f1f3f4;
+            opacity: 0.8;
+        }
+        
+        .time-box {
+            width: 150px;
+            padding: 20px;
+            font-weight: bold;
+            color: #333;
+            border-right: 1px solid #eee;
+            text-align: center;
+            font-size: 14px;
+        }
+        .details-box {
+            padding: 15px 20px;
+            flex-grow: 1;
+        }
+        .subject-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #222;
+            margin-bottom: 5px;
+        }
+        .meta-info {
+            font-size: 13px;
+            color: #666;
+        }
+        .break .subject-name {
+            color: #5f6368;
+            font-weight: 500;
+        }
+
+        /* Hide days by default */
+        .day-content {
+            display: none;
+        }
+        /* Show active day */
+        .day-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar collapsed" id="sidebar">
+        <a href="index.html" class="back-home-btn">⬅ Back to Home</a>
+        
+        <a href="timetable.html" class="nav-item active">Timetable</a>
+        <a href="#" class="nav-item">Announcements</a>
+        <a href="#" class="nav-item">Assignments tracker</a>
+        <a href="#" class="nav-item">Academic calendar</a>
+        <a href="#" class="nav-item">Resources</a>
+    </div>
+
+    <div class="main-content">
+        
+        <div class="header-section">
+            <h1><i class="menu-icon" onclick="toggleSidebar()">≡</i> Weekly Timetable</h1>
+            <div class="week-tabs">
+                <button class="tab-btn active" onclick="openDay(event, 'Monday')">Mon</button>
+                <button class="tab-btn" onclick="openDay(event, 'Tuesday')">Tue</button>
+                <button class="tab-btn" onclick="openDay(event, 'Wednesday')">Wed</button>
+                <button class="tab-btn" onclick="openDay(event, 'Thursday')">Thu</button>
+                <button class="tab-btn" onclick="openDay(event, 'Friday')">Fri</button>
+            </div>
+        </div>
+
+        <div class="schedule-card">
+            <div class="card-header">
+                Biotech Section K Schedule
+            </div>
+            <div class="card-body">
+                
+                <div id="Monday" class="day-content active">
+                    <div class="class-item lecture">
+                        <div class="time-box">09:00 AM - 10:00 AM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[MAN12101] Mathematics-II (L)</div>
+                            <div class="meta-info">Room: FEW15</div>
+                        </div>
+                    </div>
+                    <div class="class-item lecture">
+                        <div class="time-box">10:00 AM - 11:00 AM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[EAN12700] Professional Ethics and Social Value (L)</div>
+                            <div class="meta-info">Room: NLH2</div>
+                        </div>
+                    </div>
+                    <div class="class-item practical">
+                        <div class="time-box">11:00 AM - 01:00 PM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[MEN12602] Workshop and Mfg. Process (P)</div>
+                            <div class="meta-info">Batch: K1 • 2 Hours</div>
+                        </div>
+                    </div>
+                    
+                    <div class="class-item break">
+                        <div class="time-box">01:00 PM - 03:00 PM</div>
+                        <div class="details-box">
+                            <div class="subject-name">Break</div>
+                        </div>
+                    </div>
+
+                    <div class="class-item tutorial">
+                        <div class="time-box">03:00 PM - 04:00 PM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[MAN12101] Mathematics-II (T)</div>
+                            <div class="meta-info">Room: LH2</div>
+                        </div>
+                    </div>
+                    <div class="class-item lecture">
+                        <div class="time-box">04:00 PM - 05:00 PM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[MEN12602] Workshop and Mfg. Process (L)</div>
+                            <div class="meta-info">Room: LH2</div>
+                        </div>
+                    </div>
+                    <div class="class-item lecture">
+                        <div class="time-box">05:00 PM - 06:00 PM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[CSN12401] Data Structures (L)</div>
+                            <div class="meta-info">Room: NLH1</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Tuesday" class="day-content">
+                    <div class="class-item practical">
+                        <div class="time-box">09:00 AM - 11:00 AM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[CSN12601] Introduction to AI and ML (P)</div>
+                            <div class="meta-info">Room: CCSF Lab • 2 Hours</div>
+                        </div>
+                    </div>
+                    
+                    <div class="class-item break">
+                        <div class="time-box">11:00 AM - 04:00 PM</div>
+                        <div class="details-box">
+                            <div class="subject-name">Break</div>
+                        </div>
+                    </div>
+
+                    <div class="class-item practical">
+                        <div class="time-box">04:00 PM - 06:00 PM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[CSN12401] Data Structures (P)</div>
+                            <div class="meta-info">Room: CCSF Lab • 2 Hours</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Wednesday" class="day-content">
+                    <div class="class-item lecture">
+                        <div class="time-box">09:00 AM - 10:00 AM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[EAN12700] Professional Ethics and Social Value (L)</div>
+                            <div class="meta-info">Room: NLH2</div>
+                        </div>
+                    </div>
+                    <div class="class-item lecture">
+                        <div class="time-box">10:00 AM - 11:00 AM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[BTN12101] Biosafety and Bioethics (L)</div>
+                            <div class="meta-info">Room: GS5/GKP</div>
+                        </div>
+                    </div>
+                    <div class="class-item lecture">
+                        <div class="time-box">11:00 AM - 12:00 PM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[PHN12503] Engineering Physics-3 (L)</div>
+                            <div class="meta-info">Room: GS5</div>
+                        </div>
+                    </div>
+                    
+                    <div class="class-item break">
+                        <div class="time-box">12:00 PM - 03:00 PM</div>
+                        <div class="details-box">
+                            <div class="subject-name">Break</div>
+                        </div>
+                    </div>
+
+                    <div class="class-item practical">
+                        <div class="time-box">03:00 PM - 05:00 PM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[PHN12503] Engineering Physics-3 (P)</div>
+                            <div class="meta-info">2 Hours</div>
+                        </div>
+                    </div>
+                    <div class="class-item lecture">
+                        <div class="time-box">05:00 PM - 06:00 PM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[CSN12401] Data Structures (L)</div>
+                            <div class="meta-info">Room: NLH1</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Thursday" class="day-content">
+                    <div class="class-item break">
+                        <div class="time-box">09:00 AM - 11:00 AM</div>
+                        <div class="details-box">
+                            <div class="subject-name">Break</div>
+                        </div>
+                    </div>
+
+                    <div class="class-item lecture">
+                        <div class="time-box">11:00 AM - 12:00 PM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[CSN12601] Introduction to AI and ML (L)</div>
+                            <div class="meta-info">Room: GS7</div>
+                        </div>
+                    </div>
+                    <div class="class-item lecture">
+                        <div class="time-box">12:00 PM - 01:00 PM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[BTN12101] Biosafety and Bioethics (L)</div>
+                            <div class="meta-info">Room: GSS7/GKP</div>
+                        </div>
+                    </div>
+                    
+                    <div class="class-item break">
+                        <div class="time-box">01:00 PM - 04:00 PM</div>
+                        <div class="details-box">
+                            <div class="subject-name">Break</div>
+                        </div>
+                    </div>
+
+                    <div class="class-item lecture">
+                        <div class="time-box">04:00 PM - 05:00 PM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[PHN12503] Engineering Physics-3 (L)</div>
+                            <div class="meta-info">Room: GS4</div>
+                        </div>
+                    </div>
+                    <div class="class-item lecture">
+                        <div class="time-box">05:00 PM - 06:00 PM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[MAN12101] Mathematics-II (L)</div>
+                            <div class="meta-info">Room: GS4</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Friday" class="day-content">
+                    <div class="class-item lecture">
+                        <div class="time-box">09:00 AM - 10:00 AM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[CSN12601] Introduction to AI and ML (L)</div>
+                            <div class="meta-info">Room: GS5</div>
+                        </div>
+                    </div>
+                    <div class="class-item lecture">
+                        <div class="time-box">10:00 AM - 11:00 AM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[PHN12503] Engineering Physics-3 (L)</div>
+                            <div class="meta-info">Room: GS5</div>
+                        </div>
+                    </div>
+                    <div class="class-item practical">
+                        <div class="time-box">11:00 AM - 01:00 PM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[MEN12602] Workshop and Mfg. Process (P)</div>
+                            <div class="meta-info">Batch: K2 • 2 Hours</div>
+                        </div>
+                    </div>
+                    
+                    <div class="class-item break">
+                        <div class="time-box">01:00 PM - 02:00 PM</div>
+                        <div class="details-box">
+                            <div class="subject-name">Break</div>
+                        </div>
+                    </div>
+
+                    <div class="class-item lecture">
+                        <div class="time-box">02:00 PM - 03:00 PM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[MAN12101] Mathematics-II (L)</div>
+                            <div class="meta-info">Room: SEW9</div>
+                        </div>
+                    </div>
+                    <div class="class-item tutorial">
+                        <div class="time-box">03:00 PM - 04:00 PM</div>
+                        <div class="details-box">
+                            <div class="subject-name">[BTN12101] Biosafety and Bioethics (T)</div>
+                            <div class="meta-info">Room: SEW9/GKP</div>
+                        </div>
+                    </div>
+
+                    <div class="class-item break">
+                        <div class="time-box">04:00 PM - 06:00 PM</div>
+                        <div class="details-box">
+                            <div class="subject-name">Break</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JS for toggling Sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+
+        // JS for Tabs
+        function openDay(evt, dayName) {
+            var tabcontent = document.getElementsByClassName("day-content");
+            for (var i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+
+            var tablinks = document.getElementsByClassName("tab-btn");
+            for (var i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+
+            var selectedDay = document.getElementById(dayName);
+            selectedDay.style.display = "block";
+            selectedDay.classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+</body>
+</html>
