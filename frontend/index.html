@@ -6,166 +6,43 @@
     <title>Campus Companion - Home</title>
     <style>
         /* General Reset */
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f6f9;
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; display: flex; height: 100vh; overflow: hidden; }
 
-        /* Sidebar Styles (Collapsible) */
-        .sidebar {
-            width: 250px;
-            background-color: #fff;
-            border-right: 1px solid #ddd;
-            padding: 20px 0;
-            transition: width 0.3s ease, padding 0.3s ease;
-            white-space: nowrap;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        /* Collapsed state */
-        .sidebar.collapsed {
-            width: 0;
-            padding: 0;
-            border-right: none;
-        }
-
-        .sidebar h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-            font-size: 20px;
-        }
-        .nav-item {
-            padding: 15px 25px;
-            color: #555;
-            cursor: pointer;
-            font-weight: 500;
-            text-decoration: none;
-            display: block;
-        }
-        .nav-item.active {
-            background-color: #eef2f6;
-            color: #1a73e8;
-            border-radius: 0 25px 25px 0;
-            margin-right: 20px;
-        }
+        /* Sidebar Styles */
+        .sidebar { width: 250px; background-color: #fff; border-right: 1px solid #ddd; padding: 20px 0; transition: width 0.3s ease, padding 0.3s ease; white-space: nowrap; overflow: hidden; display: flex; flex-direction: column; flex-shrink: 0; }
+        .sidebar.collapsed { width: 0; padding: 0; border-right: none; }
+        .sidebar h2 { text-align: center; color: #333; margin-bottom: 30px; font-size: 20px; }
+        .nav-item { padding: 15px 25px; color: #555; cursor: pointer; font-weight: 500; text-decoration: none; display: block; }
+        .nav-item.active { background-color: #eef2f6; color: #1a73e8; border-radius: 0 25px 25px 0; margin-right: 20px; }
 
         /* Main Content */
-        .main-content {
-            flex-grow: 1;
-            padding: 40px;
-            overflow-y: auto;
-            transition: margin-left 0.3s ease;
-        }
-
-        /* Header Area */
-        .header-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            border-bottom: 2px solid #333;
-            padding-bottom: 15px;
-            margin-bottom: 30px;
-        }
-        .greeting-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .menu-icon {
-            font-size: 28px;
-            cursor: pointer;
-            user-select: none;
-        }
-        .header-section h1 {
-            margin: 0;
-            color: #333;
-            font-size: 28px;
-        }
-        .date-display {
-            font-size: 18px;
-            color: #555;
-            font-weight: 600;
-        }
+        .main-content { flex-grow: 1; padding: 40px; overflow-y: auto; transition: margin-left 0.3s ease; }
+        .header-section { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 30px; }
+        .greeting-container { display: flex; align-items: center; gap: 15px; }
+        .menu-icon { font-size: 28px; cursor: pointer; user-select: none; }
+        .header-section h1 { margin: 0; color: #333; font-size: 28px; }
+        .date-display { font-size: 18px; color: #555; font-weight: 600; }
 
         /* Day At A Glance Card */
-        .glance-card {
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-        .glance-card h3 {
-            margin-top: 0;
-            margin-bottom: 20px;
-            color: #333;
-            font-size: 18px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-        }
+        .glance-card { background-color: #fff; border: 1px solid #ccc; border-radius: 12px; padding: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .glance-card h3 { margin-top: 0; margin-bottom: 20px; color: #333; font-size: 18px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
 
         /* Dynamic Class Items */
-        .class-item {
-            background-color: #f1f4f9;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .class-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            margin: 0;
-        }
-        .class-prof {
-            font-size: 14px;
-            color: #555;
-            margin: 0;
-        }
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 5px;
-        }
-        .action-btn {
-            background-color: #fff;
-            border: 1px solid #333;
-            padding: 8px 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 13px;
-            transition: 0.2s;
-        }
-        .action-btn:hover {
-            background-color: #333;
-            color: #fff;
-        }
-        .no-classes {
-            color: #666;
-            font-size: 16px;
-            font-style: italic;
-        }
+        .class-item { background-color: #f1f4f9; border-radius: 8px; padding: 20px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; }
+        .class-title { font-size: 18px; font-weight: bold; color: #333; margin: 0; }
+        .class-prof { font-size: 14px; color: #555; margin: 0; }
+        .button-group { display: flex; gap: 10px; margin-top: 5px; }
+        .action-btn { background-color: #fff; border: 1px solid #333; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.2s; }
+        .action-btn:hover { background-color: #333; color: #fff; }
+        .no-classes { color: #666; font-size: 16px; font-style: italic; }
     </style>
 </head>
 <body>
 
     <div class="sidebar collapsed" id="sidebar">
         <h2>🎓 HOME</h2>
-        
-        <a href="index.html" class="nav-item active">Dashboard</a> 
-        <a href="timetable.html" class="nav-item">Timetable</a> 
+        <a href="index.html" class="nav-item active">Dashboard</a>
+        <a href="timetable.html" class="nav-item">Timetable</a>
         <a href="syllabus.html" class="nav-item">Syllabus</a>
         <a href="#" class="nav-item">Announcements</a>
         <a href="#" class="nav-item">Assignments tracker</a>
@@ -174,7 +51,6 @@
     </div>
 
     <div class="main-content">
-        
         <div class="header-section">
             <div class="greeting-container">
                 <i class="menu-icon" onclick="toggleSidebar()">≡</i>
@@ -185,39 +61,30 @@
 
         <div class="glance-card">
             <h3>Day At A Glance</h3>
-            
-            <div id="todays-classes">
-                </div>
+            <div id="todays-classes"></div>
         </div>
-
     </div>
 
     <script>
-        // --- 1. Sidebar Toggle Logic ---
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('collapsed');
         }
 
-        // --- 2. Dynamic Date & Greeting Logic ---
         const today = new Date();
-        
-        // Format Date: "Sunday, 28 June"
         const dateOptions = { weekday: 'long', day: 'numeric', month: 'long' };
         document.getElementById('current-date').innerText = today.toLocaleDateString('en-US', dateOptions);
 
-        // Dynamic Greeting based on time
         const hour = today.getHours();
         let greetingText = "Good Evening";
         if (hour < 12) greetingText = "Good Morning";
         else if (hour < 18) greetingText = "Good Afternoon";
         document.getElementById('greeting').innerText = `${greetingText}, Shachi!`;
 
-        // --- 3. Timetable Data (Biotech Section K) ---
         const timetableData = {
             "Monday": [
-                { subject: "[MAN12101] Mathematics-II (L)", time: "09:00 AM - 10:00 AM", prof: "Dr. Naren Bag" },
-                { subject: "[EAN12700] Professional Ethics (L)", time: "10:00 AM - 11:00 AM", prof: "Dr. Mitu Mandal" },
+                { subject: "[MAN12101] Mathematics-II (L)", time: "09:00 AM - 10:00 AM", prof: "Insert Prof Name" },
+                { subject: "[EAN12700] Professional Ethics (L)", time: "10:00 AM - 11:00 AM", prof: "Insert Prof Name" },
                 { subject: "[MEN12602] Workshop & Mfg (P)", time: "11:00 AM - 01:00 PM", prof: "Insert Prof Name" },
                 { subject: "[MAN12101] Mathematics-II (T)", time: "03:00 PM - 04:00 PM", prof: "Insert Prof Name" },
                 { subject: "[MEN12602] Workshop & Mfg (L)", time: "04:00 PM - 05:00 PM", prof: "Insert Prof Name" },
@@ -249,14 +116,12 @@
             ]
         };
 
-        // --- 4. Render Today's Classes ---
         const dayName = today.toLocaleDateString('en-US', { weekday: 'long' });
         const container = document.getElementById('todays-classes');
-        
         const todaysSchedule = timetableData[dayName];
 
         if (todaysSchedule && todaysSchedule.length > 0) {
-            container.innerHTML = ''; // Clear fallback content
+            container.innerHTML = ''; 
             todaysSchedule.forEach(cls => {
                 const classHTML = `
                     <div class="class-item">
@@ -270,8 +135,7 @@
                 container.innerHTML += classHTML;
             });
         } else {
-            // Fallback for Saturday/Sunday
-            container.innerHTML = `<p class="no-classes">It's ${dayName}! No classes today🎉</p>`;
+            container.innerHTML = `<p class="no-classes">It's ${dayName}! No classes today 🎉</p>`;
         }
     </script>
 </body>

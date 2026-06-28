@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Companion - Syllabus</title>
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; display: flex; height: 100vh; }
+        .sidebar { width: 250px; background-color: #fff; border-right: 1px solid #ddd; padding: 20px 0; transition: width 0.3s ease, padding 0.3s ease; white-space: nowrap; overflow: hidden; display: flex; flex-direction: column; flex-shrink: 0; }
+        .sidebar.collapsed { width: 0; padding: 0; border-right: none; }
+        .back-home-btn { display: block; text-align: center; background-color: #333; color: #fff; padding: 12px 15px; margin: 10px 20px 30px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px; transition: 0.2s; }
+        .back-home-btn:hover { background-color: #555; }
+        .nav-item { padding: 15px 25px; color: #555; cursor: pointer; font-weight: 500; text-decoration: none; display: block; }
+        .nav-item.active { background-color: #eef2f6; color: #1a73e8; border-radius: 0 25px 25px 0; margin-right: 20px; }
+        
+        .main-content { flex-grow: 1; padding: 40px; overflow-y: auto; }
+        .header-section { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        .header-section h1 { margin: 0; color: #333; font-size: 24px; display: flex; align-items: center; gap: 15px; }
+        .menu-icon { font-size: 28px; cursor: pointer; user-select: none; }
+
+        .syllabus-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px; }
+        .subject-card { background-color: #fff; border-left: 5px solid #333; border-radius: 8px; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: transform 0.2s; }
+        .subject-card:hover { transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .subject-card h3 { margin: 0 0 10px 0; color: #222; font-size: 18px; }
+        .subject-card p { margin: 0 0 15px 0; color: #666; font-size: 14px; }
+        .download-btn { background-color: #1a73e8; color: #fff; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 13px; }
+        .download-btn:hover { background-color: #1557b0; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar collapsed" id="sidebar">
+        <a href="index.html" class="back-home-btn">⬅ Back to Home</a>
+        <a href="index.html" class="nav-item">Dashboard</a>
+        <a href="timetable.html" class="nav-item">Timetable</a>
+        <a href="syllabus.html" class="nav-item active">Syllabus</a>
+        <a href="#" class="nav-item">Announcements</a>
+        <a href="#" class="nav-item">Assignments tracker</a>
+        <a href="#" class="nav-item">Academic calendar</a>
+        <a href="#" class="nav-item">Resources</a>
+    </div>
+
+    <div class="main-content">
+        <div class="header-section">
+            <h1><i class="menu-icon" onclick="toggleSidebar()">≡</i> Course Syllabus</h1>
+        </div>
+
+        <p style="color: #555; font-size: 16px;">Biotechnology Second Semester (Section K) Official Syllabi</p>
+
+        <div class="syllabus-grid">
+            <div class="subject-card" style="border-left-color: #4285f4;">
+                <h3>Data Structures</h3>
+                <p>Code: CSN12401 (2L, 1P)</p>
+                <button class="download-btn">View PDF</button>
+            </div>
+            <div class="subject-card" style="border-left-color: #34a853;">
+                <h3>Mathematics-II</h3>
+                <p>Code: MAN12101 (3L, 1T)</p>
+                <button class="download-btn">View PDF</button>
+            </div>
+            <div class="subject-card" style="border-left-color: #fbbc05;">
+                <h3>Engineering Physics-3</h3>
+                <p>Code: PHN12503 (2L, 1T, 1P)</p>
+                <button class="download-btn">View PDF</button>
+            </div>
+            <div class="subject-card" style="border-left-color: #ea4335;">
+                <h3>Intro to AI and ML</h3>
+                <p>Code: CSN12601 (2L, 1P)</p>
+                <button class="download-btn">View PDF</button>
+            </div>
+            <div class="subject-card" style="border-left-color: #9c27b0;">
+                <h3>Biosafety and Bioethics</h3>
+                <p>Code: BTN12101 (2L, 1T)</p>
+                <button class="download-btn">View PDF</button>
+            </div>
+            <div class="subject-card" style="border-left-color: #ff9800;">
+                <h3>Professional Ethics</h3>
+                <p>Code: EAN12700 (2L)</p>
+                <button class="download-btn">View PDF</button>
+            </div>
+            <div class="subject-card" style="border-left-color: #607d8b;">
+                <h3>Workshop & Mfg. Process</h3>
+                <p>Code: MEN12602 (1L, 2P)</p>
+                <button class="download-btn">View PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+    </script>
+</body>
+</html>
