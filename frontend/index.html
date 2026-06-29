@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Campus Companion - Home</title>
     <style>
-        /* General Reset */
+        /* General Reset & Sidebar */
         body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; display: flex; height: 100vh; overflow: hidden; }
-
-        /* Sidebar Styles */
         .sidebar { width: 250px; background-color: #fff; border-right: 1px solid #ddd; padding: 20px 0; transition: width 0.3s ease, padding 0.3s ease; white-space: nowrap; overflow: hidden; display: flex; flex-direction: column; flex-shrink: 0; }
         .sidebar.collapsed { width: 0; padding: 0; border-right: none; }
         .sidebar h2 { text-align: center; color: #333; margin-bottom: 30px; font-size: 20px; }
@@ -23,28 +21,67 @@
         .header-section h1 { margin: 0; color: #333; font-size: 28px; }
         .date-display { font-size: 18px; color: #555; font-weight: 600; }
 
-        /* Day At A Glance Card */
-        .glance-card { background-color: #fff; border: 1px solid #ccc; border-radius: 12px; padding: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .glance-card h3 { margin-top: 0; margin-bottom: 20px; color: #333; font-size: 18px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        /* Dashboard Split Layout */
+        .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; }
 
-        /* Universal Subject Color Palette */
-        .color-math { border-left-color: #4285f4 !important; }       /* Blue */
-        .color-dsa { border-left-color: #34a853 !important; }        /* Green */
-        .color-physics { border-left-color: #fbbc05 !important; }    /* Yellow */
-        .color-ai { border-left-color: #ea4335 !important; }         /* Red */
-        .color-bioethics { border-left-color: #9c27b0 !important; }  /* Purple */
-        .color-ethics { border-left-color: #e91e63 !important; }     /* Pink (Changed!) */
-        .color-workshop { border-left-color: #607d8b !important; }   /* Blue-Grey */
-        .color-break { border-left-color: #9aa0a6 !important; background-color: #f1f3f4; opacity: 0.8; }
+        /* Cards */
+        .card-container { background-color: #fff; border: 1px solid #ccc; border-radius: 12px; padding: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .card-container h3 { margin-top: 0; margin-bottom: 20px; color: #333; font-size: 18px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+
+        /* Palette */
+        .color-math { border-left-color: #4285f4 !important; }       
+        .color-dsa { border-left-color: #34a853 !important; }        
+        .color-physics { border-left-color: #fbbc05 !important; }    
+        .color-ai { border-left-color: #ea4335 !important; }         
+        .color-bioethics { border-left-color: #9c27b0 !important; }  
+        .color-ethics { border-left-color: #e91e63 !important; }     
+        .color-workshop { border-left-color: #607d8b !important; }   
 
         /* Dynamic Class Items */
-        .class-item { background-color: #f1f4f9; border-radius: 8px; padding: 20px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; border-left: 5px solid #ccc; }
-        .class-title { font-size: 18px; font-weight: bold; color: #333; margin: 0; }
-        .class-prof { font-size: 14px; color: #555; margin: 0; }
-        .button-group { display: flex; gap: 10px; margin-top: 5px; }
-        .action-btn { background-color: #fff; border: 1px solid #333; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.2s; }
-        .action-btn:hover { background-color: #333; color: #fff; }
-        .no-classes { color: #666; font-size: 16px; font-style: italic; }
+        .class-item { 
+            position: relative; background-color: #f1f4f9; border-radius: 8px; 
+            padding: 20px 140px 25px 20px; 
+            min-height: 50px;
+            margin-bottom: 15px; display: flex; flex-direction: column; gap: 5px; border-left: 5px solid #ccc; 
+            transition: all 0.3s ease;
+        }
+        .class-title { font-size: 16px; font-weight: bold; color: #333; margin: 0; }
+        .class-prof { font-size: 13px; color: #555; margin: 0; }
+        
+        /* Conditional Visual States */
+        .class-item.status-attended { background-color: #e8f5e9 !important; opacity: 0.8; }
+        .class-item.status-attended .class-title { text-decoration: line-through; color: #2e7d32; }
+
+        .class-item.status-absent { background-color: #ffebee !important; opacity: 0.8; }
+        .class-item.status-absent .class-title { text-decoration: line-through; color: #c62828; }
+
+        .class-item.status-cancelled { background-color: #e0e0e0 !important; opacity: 0.6; }
+        .class-item.status-cancelled .class-title { text-decoration: line-through; color: #616161; }
+
+        /* UI Controls */
+        .status-container { position: absolute; bottom: 15px; right: 15px; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+        .class-controls { display: flex; gap: 6px; }
+        
+        .btn-action { 
+            border: none; border-radius: 4px; width: 26px; height: 26px; font-size: 13px; font-weight: bold; 
+            cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; 
+            transition: 0.2s;
+        }
+        
+        /* Buttons */
+        .btn-tick { background: #c8e6c9; color: #2e7d32; }
+        .btn-tick:hover { background: #a5d6a7; }
+        .class-item.status-attended .btn-tick { background: #2e7d32; color: #fff; }
+        
+        .btn-absent { background: #ffcdd2; color: #c62828; font-size: 15px; }
+        .btn-absent:hover { background: #ef9a9a; }
+        .class-item.status-absent .btn-absent { background: #c62828; color: #fff; }
+        
+        .btn-cancel-class { background: #cfd8dc; color: #37474f; }
+        .btn-cancel-class:hover { background: #b0bec5; }
+        .class-item.status-cancelled .btn-cancel-class { background: #37474f; color: #fff; }
+
+        .attendance-stats { font-size: 12px; font-weight: 700; color: #666; background: #e0e6ed; padding: 4px 8px; border-radius: 4px; }
     </style>
 </head>
 <body>
@@ -58,7 +95,6 @@
         <a href="#" class="nav-item">Assignments tracker</a>
         <a href="#" class="nav-item">Academic calendar</a>
         <a href="#" class="nav-item">Resources</a>
-        <a href="#" class="nav-item">Important links</a>
     </div>
 
     <div class="main-content">
@@ -70,83 +106,108 @@
             <div class="date-display" id="current-date">Sunday, 28 June</div>
         </div>
 
-        <div class="glance-card">
-            <h3>Day At A Glance</h3>
-            <div id="todays-classes"></div>
+        <div class="dashboard-grid">
+            <div class="card-container">
+                <h3>Day At A Glance</h3>
+                <div id="todays-classes"></div>
+            </div>
+
+            <div class="card-container">
+                <h3>Urgent Reminders</h3>
+                <div id="urgent-reminders">
+                    <div class="reminder-item">
+                        <p class="reminder-title">Professional Ethics Essay</p>
+                        <p class="reminder-due">Due Tomorrow (June 30)</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('collapsed');
-        }
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('collapsed'); }
 
         const today = new Date();
         const dateOptions = { weekday: 'long', day: 'numeric', month: 'long' };
         document.getElementById('current-date').innerText = today.toLocaleDateString('en-US', dateOptions);
 
         const hour = today.getHours();
-        let greetingText = "Good Evening";
-        if (hour < 12) greetingText = "Good Morning";
-        else if (hour < 18) greetingText = "Good Afternoon";
+        let greetingText = (hour < 12) ? "Good Morning" : (hour < 18) ? "Good Afternoon" : "Good Evening";
         document.getElementById('greeting').innerText = `${greetingText}, Shachi!`;
 
         const timetableData = {
             "Monday": [
-                { subject: "[MAN12101] Mathematics-II (L)", time: "09:00 AM - 10:00 AM", prof: "Dr. Naren Bag", theme: "color-math" },
-                { subject: "[EAN12700] Professional Ethics (L)", time: "10:00 AM - 11:00 AM", prof: "Insert Prof Name", theme: "color-ethics" },
-                { subject: "[MEN12602] Workshop & Mfg (P)", time: "11:00 AM - 01:00 PM", prof: "Insert Prof Name", theme: "color-workshop" },
-                { subject: "[MAN12101] Mathematics-II (T)", time: "03:00 PM - 04:00 PM", prof: "Insert Prof Name", theme: "color-math" },
-                { subject: "[MEN12602] Workshop & Mfg (L)", time: "04:00 PM - 05:00 PM", prof: "Insert Prof Name", theme: "color-workshop" },
-                { subject: "[CSN12401] Data Structures (L)", time: "05:00 PM - 06:00 PM", prof: "Insert Prof Name", theme: "color-dsa" }
-            ],
-            "Tuesday": [
-                { subject: "[CSN12601] AI and ML (P)", time: "09:00 AM - 11:00 AM", prof: "Insert Prof Name", theme: "color-ai" },
-                { subject: "[CSN12401] Data Structures (P)", time: "04:00 PM - 06:00 PM", prof: "Insert Prof Name", theme: "color-dsa" }
-            ],
-            "Wednesday": [
-                { subject: "[EAN12700] Professional Ethics (L)", time: "09:00 AM - 10:00 AM", prof: "Insert Prof Name", theme: "color-ethics" },
-                { subject: "[BTN12101] Biosafety & Bioethics (L)", time: "10:00 AM - 11:00 AM", prof: "Dr. Girijesh Kumar Patel", theme: "color-bioethics" },
-                { subject: "[PHN12503] Engineering Physics-3 (L)", time: "11:00 AM - 12:00 PM", prof: "Insert Prof Name", theme: "color-physics" },
-                { subject: "[PHN12503] Engineering Physics-3 (P)", time: "03:00 PM - 05:00 PM", prof: "Insert Prof Name", theme: "color-physics" },
-                { subject: "[CSN12401] Data Structures (L)", time: "05:00 PM - 06:00 PM", prof: "Insert Prof Name", theme: "color-dsa" }
-            ],
-            "Thursday": [
-                { subject: "[CSN12601] AI and ML (L)", time: "11:00 AM - 12:00 PM", prof: "Insert Prof Name", theme: "color-ai" },
-                { subject: "[BTN12101] Biosafety & Bioethics (L)", time: "12:00 PM - 01:00 PM", prof: "Dr. Girijesh Kumar Patel", theme: "color-bioethics" },
-                { subject: "[PHN12503] Engineering Physics-3 (L)", time: "04:00 PM - 05:00 PM", prof: "Insert Prof Name", theme: "color-physics" },
-                { subject: "[MAN12101] Mathematics-II (L)", time: "05:00 PM - 06:00 PM", prof: "Insert Prof Name", theme: "color-math" }
-            ],
-            "Friday": [
-                { subject: "[CSN12601] AI and ML (L)", time: "09:00 AM - 10:00 AM", prof: "Insert Prof Name", theme: "color-ai" },
-                { subject: "[PHN12503] Engineering Physics-3 (L)", time: "10:00 AM - 11:00 AM", prof: "Insert Prof Name", theme: "color-physics" },
-                { subject: "[MEN12602] Workshop & Mfg (P)", time: "11:00 AM - 01:00 PM", prof: "Insert Prof Name", theme: "color-workshop" },
-                { subject: "[MAN12101] Mathematics-II (L)", time: "02:00 PM - 03:00 PM", prof: "Dr. Naren Bag", theme: "color-math" },
-                { subject: "[BTN12101] Biosafety & Bioethics (T)", time: "03:00 PM - 04:00 PM", prof: "Dr. Girijesh Kumar Patel", theme: "color-bioethics" }
+                { subject: "[MAN12101] Mathematics-II (L)", time: "09:00 AM - 10:00 AM", prof: "Dr. Naren Bag", theme: "color-math", attended: 0, total: 1 },
+                { subject: "[EAN12700] Professional Ethics (L)", time: "10:00 AM - 11:00 AM", prof: "Insert Prof Name", theme: "color-ethics", attended: 0, total: 1 },
+                { subject: "[MEN12602] Workshop & Mfg (P)", time: "11:00 AM - 01:00 PM", prof: "Insert Prof Name", theme: "color-workshop", attended: 0, total: 1 },
+                { subject: "[MAN12101] Mathematics-II (T)", time: "03:00 PM - 04:00 PM", prof: "Dr. Naren Bag", theme: "color-math", attended: 0, total: 1 },
+                { subject: "[MEN12602] Workshop & Mfg (L)", time: "04:00 PM - 05:00 PM", prof: "Insert Prof Name", theme: "color-workshop", attended: 0, total: 1 },
+                { subject: "[CSN12401] Data Structures (L)", time: "05:00 PM - 06:00 PM", prof: "Insert Prof Name", theme: "color-dsa", attended: 0, total: 1 }
             ]
         };
 
+        function toggleButtonState(clickedState, uniqueId, baseAttended, baseTotal, statsId, itemId) {
+            const currentState = localStorage.getItem(uniqueId) || 'pending';
+            const newState = (currentState === clickedState) ? 'pending' : clickedState;
+            localStorage.setItem(uniqueId, newState);
+            applyState(uniqueId, newState, baseAttended, baseTotal, statsId, itemId);
+        }
+
+        function applyState(uniqueId, state, baseAttended, baseTotal, statsId, itemId) {
+            const itemElement = document.getElementById(itemId);
+            const statsElement = document.getElementById(statsId);
+            itemElement.classList.remove('status-attended', 'status-absent', 'status-cancelled');
+
+            let finalAttended = baseAttended;
+            let finalTotal = baseTotal;
+
+            if (state === 'attended') {
+                itemElement.classList.add('status-attended');
+                finalAttended = baseAttended + 1;
+            } else if (state === 'absent') {
+                itemElement.classList.add('status-absent');
+                finalAttended = baseAttended;
+            } else if (state === 'cancelled') {
+                itemElement.classList.add('status-cancelled');
+                finalAttended = baseAttended;
+                finalTotal = baseTotal - 1;
+            }
+
+            const percent = (finalTotal <= 0) ? 0 : Math.round((finalAttended / finalTotal) * 100);
+            statsElement.innerText = `${finalAttended}/${finalTotal} Attended (${percent}%)`;
+        }
+
         const dayName = today.toLocaleDateString('en-US', { weekday: 'long' });
         const container = document.getElementById('todays-classes');
-        const todaysSchedule = timetableData[dayName];
+        const todaysSchedule = timetableData[dayName] || timetableData["Monday"]; 
 
         if (todaysSchedule && todaysSchedule.length > 0) {
             container.innerHTML = ''; 
-            todaysSchedule.forEach(cls => {
+            todaysSchedule.forEach((cls, index) => {
+                const uniqueId = `att-${dayName}-${index}`;
+                const statsId = `stats-${dayName}-${index}`;
+                const itemId = `item-${dayName}-${index}`;
+                
                 const classHTML = `
-                    <div class="class-item ${cls.theme}">
-                        <h4 class="class-title">${cls.subject} (${cls.time})</h4>
-                        <p class="class-prof"><strong>Prof:</strong> ${cls.prof}</p>
-                        <div class="button-group">
-                            <button class="action-btn">Assignment</button>
+                    <div class="class-item ${cls.theme}" id="${itemId}">
+                        <h4 class="class-title">${cls.subject}</h4>
+                        <p class="class-prof"><strong>Prof:</strong> ${cls.prof} | 🕒 ${cls.time}</p>
+                        
+                        <div class="status-container">
+                            <div class="class-controls">
+                                <button class="btn-action btn-tick" title="Attended" onclick="toggleButtonState('attended', '${uniqueId}', ${cls.attended}, ${cls.total}, '${statsId}', '${itemId}')">✓</button>
+                                <button class="btn-action btn-absent" title="Absent" onclick="toggleButtonState('absent', '${uniqueId}', ${cls.attended}, ${cls.total}, '${statsId}', '${itemId}')">✗</button>
+                                <button class="btn-action btn-cancel-class" title="Class Cancelled" onclick="toggleButtonState('cancelled', '${uniqueId}', ${cls.attended}, ${cls.total}, '${statsId}', '${itemId}')">C</button>
+                            </div>
+                            <div class="attendance-stats" id="${statsId}">${cls.attended}/${cls.total} Attended (0%)</div>
                         </div>
                     </div>
                 `;
                 container.innerHTML += classHTML;
+
+                const savedState = localStorage.getItem(uniqueId) || 'pending';
+                applyState(uniqueId, savedState, cls.attended, cls.total, statsId, itemId);
             });
-        } else {
-            container.innerHTML = `<p class="no-classes">It's ${dayName}! No classes today 🎉</p>`;
         }
     </script>
 </body>
