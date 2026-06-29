@@ -92,7 +92,7 @@
         <a href="timetable.html" class="nav-item">Timetable</a>
         <a href="syllabus.html" class="nav-item">Syllabus</a>
         <a href="#" class="nav-item">Announcements</a>
-        <a href="#" class="nav-item">Assignments tracker</a>
+        <a href="assignments.html" class="nav-item">Assignments tracker</a>
         <a href="#" class="nav-item">Academic calendar</a>
         <a href="#" class="nav-item">Resources</a>
     </div>
@@ -208,6 +208,31 @@
                 const savedState = localStorage.getItem(uniqueId) || 'pending';
                 applyState(uniqueId, savedState, cls.attended, cls.total, statsId, itemId);
             });
+
+
+            // Dashboard mein reminder update karne ke liye
+const today = new Date();
+const urgentDiv = document.getElementById('urgent-reminders');
+
+assignments.forEach(a => {
+    const due = new Date(a.dueDate);
+    const diffDays = (due - today) / (1000 * 60 * 60 * 24);
+    
+    // Sirf wahi dikhao jo pending hain aur 3 din mein due hain
+    if (diffDays <= 3 && diffDays >= 0 && localStorage.getItem(`assign-${a.id}`) !== 'done') {
+        urgentDiv.innerHTML += `
+            <div class="reminder-item">
+                <p class="reminder-title">${a.title}</p>
+                <p class="reminder-due">Due in ${Math.ceil(diffDays)} days</p>
+            </div>
+        `;
+    }
+});
+// Add this in index.html inside the <script>
+const assignments = [
+    { id: 1, title: "Ethics Essay", dueDate: "2026-06-30", pdf: "pdfs/ethics.pdf" },
+    { id: 2, title: "Robotics Code", dueDate: "2026-07-02", pdf: "pdfs/robotics.pdf" }
+];
         }
     </script>
 </body>

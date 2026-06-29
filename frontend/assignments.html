@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignments Tracker</title>
+    <style>
+        /* Yahi CSS tumhare index.html mein bhi hai - perfectly matched */
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #f4f6f9; display: flex; height: 100vh; overflow: hidden; }
+        
+        .sidebar { width: 250px; background-color: #fff; border-right: 1px solid #ddd; padding: 20px 0; transition: width 0.3s ease; white-space: nowrap; overflow: hidden; display: flex; flex-direction: column; flex-shrink: 0; }
+        .sidebar.collapsed { width: 0; padding: 0; border-right: none; }
+        .nav-item { padding: 15px 25px; color: #555; cursor: pointer; text-decoration: none; display: block; }
+        .nav-item.active { background-color: #eef2f6; color: #1a73e8; border-radius: 0 25px 25px 0; margin-right: 20px; }
+
+        .main-content { flex-grow: 1; padding: 40px; overflow-y: auto; }
+        .card { background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
+        .status-done { background-color: #e8f5e9; text-decoration: line-through; color: #757575; }
+        .btn-tick { background: #c8e6c9; color: #2e7d32; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar collapsed" id="sidebar">
+        <h2>🎓 HOME</h2>
+        <a href="index.html" class="nav-item">Dashboard</a>
+        <a href="timetable.html" class="nav-item">Timetable</a>
+        <a href="syllabus.html" class="nav-item">Syllabus</a>
+        <a href="assignments.html" class="nav-item active">Assignments tracker</a>
+    </div>
+
+    <div class="main-content">
+        <button onclick="document.getElementById('sidebar').classList.toggle('collapsed')">≡ Menu</button>
+        <div class="card" style="margin-top: 20px;">
+            <h2>📋 Assignments Tracker</h2>
+            <table>
+                <thead><tr><th>Assignment</th><th>Due Date</th><th>PDF</th><th>Status</th></tr></thead>
+                <tbody id="assignment-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const assignments = [
+            { id: 1, title: "Ethics Essay", dueDate: "2026-06-30", pdf: "pdfs/ethics.pdf" },
+            { id: 2, title: "Robotics Code", dueDate: "2026-07-02", pdf: "pdfs/robotics.pdf" }
+        ];
+
+        function renderAssignments() {
+            const body = document.getElementById('assignment-body');
+            body.innerHTML = '';
+            assignments.forEach(a => {
+                const status = localStorage.getItem(`assign-${a.id}`) || 'pending';
+                body.innerHTML += `
+                    <tr class="${status === 'done' ? 'status-done' : ''}">
+                        <td>${a.title}</td>
+                        <td>${a.dueDate}</td>
+                        <td><a href="${a.pdf}" target="_blank">View PDF</a></td>
+                        <td><button class="btn-tick" onclick="toggleStatus(${a.id})">✓</button></td>
+                    </tr>`;
+            });
+        }
+
+        function toggleStatus(id) {
+            const current = localStorage.getItem(`assign-${id}`);
+            localStorage.setItem(`assign-${id}`, current === 'done' ? 'pending' : 'done');
+            renderAssignments();
+        }
+        renderAssignments();
+    </script>
+</body>
+</html>
