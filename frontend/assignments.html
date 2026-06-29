@@ -2,73 +2,164 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Assignments Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Companion - Assignments</title>
     <style>
-        /* Yahi CSS tumhare index.html mein bhi hai - perfectly matched */
-        body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #f4f6f9; display: flex; height: 100vh; overflow: hidden; }
-        
-        .sidebar { width: 250px; background-color: #fff; border-right: 1px solid #ddd; padding: 20px 0; transition: width 0.3s ease; white-space: nowrap; overflow: hidden; display: flex; flex-direction: column; flex-shrink: 0; }
+        /* Exact CSS from your syllabus.html */
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; display: flex; height: 100vh; }
+        .sidebar { width: 250px; background-color: #fff; border-right: 1px solid #ddd; padding: 20px 0; transition: width 0.3s ease, padding 0.3s ease; white-space: nowrap; overflow: hidden; display: flex; flex-direction: column; flex-shrink: 0; }
         .sidebar.collapsed { width: 0; padding: 0; border-right: none; }
-        .nav-item { padding: 15px 25px; color: #555; cursor: pointer; text-decoration: none; display: block; }
+        .back-home-btn { display: block; text-align: center; background-color: #333; color: #fff; padding: 12px 15px; margin: 10px 20px 30px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px; transition: 0.2s; }
+        .back-home-btn:hover { background-color: #555; }
+        .nav-item { padding: 15px 25px; color: #555; cursor: pointer; font-weight: 500; text-decoration: none; display: block; }
         .nav-item.active { background-color: #eef2f6; color: #1a73e8; border-radius: 0 25px 25px 0; margin-right: 20px; }
-
-        .main-content { flex-grow: 1; padding: 40px; overflow-y: auto; }
-        .card { background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
-        .status-done { background-color: #e8f5e9; text-decoration: line-through; color: #757575; }
-        .btn-tick { background: #c8e6c9; color: #2e7d32; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; }
+        .main-content { flex-grow: 1; padding: 40px; overflow-y: auto; }
+        .header-section { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        .header-section h1 { margin: 0; color: #333; font-size: 24px; display: flex; align-items: center; gap: 15px; }
+        .menu-icon { font-size: 28px; cursor: pointer; user-select: none; }
+
+        /* Universal Subject Color Palette */
+        .color-math { border-left-color: #4285f4 !important; }       
+        .color-dsa { border-left-color: #34a853 !important; }        
+        .color-physics { border-left-color: #fbbc05 !important; }    
+        .color-ai { border-left-color: #ea4335 !important; }         
+        .color-bioethics { border-left-color: #9c27b0 !important; }  
+        .color-ethics { border-left-color: #e91e63 !important; }     
+        .color-workshop { border-left-color: #607d8b !important; }   
+
+        /* Assignment Specific Styles (blended with syllabus style) */
+        .assignments-container { display: flex; flex-direction: column; gap: 20px; margin-top: 20px; }
+        
+        .subject-card { background-color: #fff; border-left: 5px solid #333; border-radius: 8px; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .subject-header { margin: 0 0 15px 0; color: #222; font-size: 18px; display: flex; justify-content: space-between; align-items: center;}
+        .subject-code { font-size: 13px; color: #777; font-weight: normal; background: #f1f3f4; padding: 4px 8px; border-radius: 4px;}
+        
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #eee; font-size: 14px; }
+        th { background-color: #fafafa; color: #555; font-weight: 600; }
+        
+        .status-done td { color: #999; }
+        .status-done .task-title { text-decoration: line-through; }
+        
+        .btn-tick { border: none; border-radius: 4px; width: 28px; height: 28px; font-size: 14px; font-weight: bold; cursor: pointer; background: #e0e0e0; color: #757575; transition: 0.2s;}
+        .status-done .btn-tick { background: #34a853; color: #fff; } 
+        
+        .download-btn { background-color: #1a73e8; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 12px; text-decoration: none; display: inline-block; }
+        .download-btn:hover { background-color: #1557b0; }
     </style>
 </head>
 <body>
 
     <div class="sidebar collapsed" id="sidebar">
-        <h2>🎓 HOME</h2>
+        <a href="index.html" class="back-home-btn">⬅ Back to Home</a>
         <a href="index.html" class="nav-item">Dashboard</a>
         <a href="timetable.html" class="nav-item">Timetable</a>
         <a href="syllabus.html" class="nav-item">Syllabus</a>
+        <a href="#" class="nav-item">Announcements</a>
         <a href="assignments.html" class="nav-item active">Assignments tracker</a>
+        <a href="#" class="nav-item">Academic calendar</a>
+        <a href="#" class="nav-item">Resources</a>
     </div>
 
     <div class="main-content">
-        <button onclick="document.getElementById('sidebar').classList.toggle('collapsed')">≡ Menu</button>
-        <div class="card" style="margin-top: 20px;">
-            <h2>📋 Assignments Tracker</h2>
-            <table>
-                <thead><tr><th>Assignment</th><th>Due Date</th><th>PDF</th><th>Status</th></tr></thead>
-                <tbody id="assignment-body"></tbody>
-            </table>
+        <div class="header-section">
+            <h1><i class="menu-icon" onclick="toggleSidebar()">≡</i> Assignments Tracker</h1>
         </div>
+
+        <p style="color: #555; font-size: 16px;">Biotechnology Second Semester (Section K) Pending Assignments</p>
+
+        <div class="assignments-container" id="tracker-container">
+            </div>
     </div>
 
     <script>
-        const assignments = [
-            { id: 1, title: "Ethics Essay", dueDate: "2026-06-30", pdf: "pdfs/ethics.pdf" },
-            { id: 2, title: "Robotics Code", dueDate: "2026-07-02", pdf: "pdfs/robotics.pdf" }
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+
+        const subjectsData = [
+            { 
+                id: "dsa", name: "Data Structures", code: "CSN12401", theme: "color-dsa", 
+                tasks: [
+                    { id: "dsa-1", title: "Linked List Implementation", dueDate: "2026-07-05", pdf: "pdfs/dsa_lab1.pdf" }
+                ] 
+            },
+            { 
+                id: "math", name: "Mathematics-II", code: "MAN12101", theme: "color-math", 
+                tasks: [] 
+            },
+            { 
+                id: "ethics", name: "Professional Ethics", code: "EAN12700", theme: "color-ethics", 
+                tasks: [
+                    { id: "eth-1", title: "CRISPR-CAS9 & GMOs Essay Draft", dueDate: "2026-06-30", pdf: "pdfs/ethics_essay.pdf" }
+                ] 
+            },
+            { 
+                id: "physics", name: "Engineering Physics-3", code: "PHN12503", theme: "color-physics", 
+                tasks: [
+                    { id: "phy-1", title: "Fourier Transforms Worksheet", dueDate: "2026-07-10", pdf: "pdfs/physics_ws.pdf" }
+                ] 
+            },
+            { id: "ai", name: "Intro to AI and ML", code: "CSN12601", theme: "color-ai", tasks: [] },
+            { id: "bioethics", name: "Biosafety and Bioethics", code: "BTN12101", theme: "color-bioethics", tasks: [] },
+            { 
+                id: "workshop", name: "Workshop & Mfg. Process", code: "MEN12602", theme: "color-workshop", 
+                tasks: [
+                    { id: "work-1", title: "Viva Prep Document", dueDate: "2026-07-02", pdf: "pdfs/workshop_viva.pdf" }
+                ] 
+            }
         ];
 
-        function renderAssignments() {
-            const body = document.getElementById('assignment-body');
-            body.innerHTML = '';
-            assignments.forEach(a => {
-                const status = localStorage.getItem(`assign-${a.id}`) || 'pending';
-                body.innerHTML += `
-                    <tr class="${status === 'done' ? 'status-done' : ''}">
-                        <td>${a.title}</td>
-                        <td>${a.dueDate}</td>
-                        <td><a href="${a.pdf}" target="_blank">View PDF</a></td>
-                        <td><button class="btn-tick" onclick="toggleStatus(${a.id})">✓</button></td>
-                    </tr>`;
+        function renderTracker() {
+            const container = document.getElementById('tracker-container');
+            container.innerHTML = '';
+            
+            subjectsData.forEach(subject => {
+                let rowsHTML = '';
+                
+                if (subject.tasks.length === 0) {
+                    rowsHTML = '<tr><td colspan="4" style="text-align:center; color:#888; padding: 20px;">No pending assignments.</td></tr>';
+                } else {
+                    rowsHTML = subject.tasks.map(task => {
+                        const done = localStorage.getItem(`assign-${task.id}`) === 'done';
+                        return `
+                            <tr class="${done ? 'status-done' : ''}">
+                                <td class="task-title" style="width: 45%;">${task.title}</td>
+                                <td style="width: 20%;">${task.dueDate}</td>
+                                <td style="width: 20%;"><a href="${task.pdf}" target="_blank" class="download-btn">View PDF</a></td>
+                                <td style="width: 15%; text-align: right;">
+                                    <button class="btn-tick" onclick="toggleTask('${task.id}')">✓</button>
+                                </td>
+                            </tr>`;
+                    }).join('');
+                }
+                
+                container.innerHTML += `
+                    <div class="subject-card ${subject.theme}">
+                        <h3 class="subject-header">${subject.name} <span class="subject-code">${subject.code}</span></h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Due Date</th>
+                                    <th>Reference</th>
+                                    <th style="text-align: right;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>${rowsHTML}</tbody>
+                        </table>
+                    </div>`;
             });
         }
 
-        function toggleStatus(id) {
-            const current = localStorage.getItem(`assign-${id}`);
-            localStorage.setItem(`assign-${id}`, current === 'done' ? 'pending' : 'done');
-            renderAssignments();
+        function toggleTask(id) {
+            localStorage.setItem(`assign-${id}`, localStorage.getItem(`assign-${id}`) === 'done' ? 'pending' : 'done');
+            renderTracker();
         }
-        renderAssignments();
+        
+        renderTracker();
     </script>
 </body>
 </html>
